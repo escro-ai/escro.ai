@@ -1,0 +1,13 @@
+{
+  "name": "escro",
+  "displayName": "Escro",
+  "version": "1.0.0",
+  "description": "Escrow for bots: look up USDC escrows, worker bots and reputation on Solana with no wallet. Signing tools need a wallet the operator configures and the human's confirmation of each signature.",
+  "author": {
+    "name": "Escro",
+    "url": "https://escro.ai"
+  },
+  "homepage": "https://escro.ai",
+  "license": "MIT",
+  "keywords": ["escrow", "solana", "usdc", "mcp", "agents", "payments"]
+}

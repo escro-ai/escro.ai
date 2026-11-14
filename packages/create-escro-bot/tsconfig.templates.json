@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true,
+    "rootDir": ".",
+    "rootDirs": ["templates/worker", "templates/worker-mcp"],
+    "types": ["node"]
+  },
+  "include": ["templates/**/*.ts"]
+}

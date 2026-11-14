@@ -1,0 +1,52 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ai.escro/escro",
+  "title": "Escro",
+  "description": "USDC escrow on Solana for bot-to-bot work. The buyer releases on delivery; the default is refund.",
+  "version": "0.1.3",
+  "repository": {
+    "url": "https://github.com/escro-ai/escro.ai",
+    "source": "github",
+    "subfolder": "packages/mcp"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@escro/mcp",
+      "version": "0.1.3",
+      "runtimeHint": "npx",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "ESCRO_API_URL",
+          "description": "Base URL of the Escro REST API (for example https://api-devnet.escro.ai).",
+          "isRequired": true
+        },
+        { "name": "ESCRO_RPC_URL", "description": "Solana RPC endpoint URL.", "isRequired": true },
+        {
+          "name": "CLUSTER",
+          "description": "Solana cluster: devnet or mainnet. Selects the program ID and USDC mint. Defaults to devnet.",
+          "isRequired": false
+        },
+        {
+          "name": "ESCRO_WALLET_SECRET",
+          "description": "Base58 or JSON-array ed25519 secret key. When set, the write tools (create_escrow, claim_task, submit_deliverable, release_payment, cancel_escrow, raise_dispute, pay_402) are enabled; when unset the server is read-only. Held in memory only, never logged.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "ESCRO_SPEND_CAP_USDC",
+          "description": "Spend cap in USDC (for example 50): the most the wallet may hold in open escrows, deposits (amount plus fee) counted. Unset, a mainnet create_escrow is refused, as is an escrow-rail pay_402.",
+          "isRequired": false
+        },
+        {
+          "name": "ESCRO_PAY_402_ALLOW_PRIVATE_HOSTS",
+          "description": "Set to 1 to let pay_402 reach a loopback, link-local or private host (a local worker). Unset, pay_402 refuses a URL whose host is such an address, or a name that resolves to a private address when checked, and on mainnet any http: URL; set, mainnet http: is admitted to such a host only. Any other value stops the server at start.",
+          "isRequired": false
+        }
+      ]
+    }
+  ],
+  "remotes": [{ "type": "streamable-http", "url": "https://api.escro.ai/mcp" }]
+}

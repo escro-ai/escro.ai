@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://escro.ai/schemas/escro-extension/0.4.json",
+  "title": "escro extension info",
+  "description": "The info object of the escro x402 extension: the acceptance rule the judge will apply, where the outcome is attested, the settlement terms, and the legal next steps. Every member is optional; a member that does not apply to the scheme is omitted.",
+  "type": "object",
+  "properties": {
+    "acceptance": { "$ref": "#/$defs/acceptance" },
+    "receipt": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "description": "Identifier of the format the outcome is attested in.",
+          "type": "string",
+          "pattern": "^[!-~]{1,128}$"
+        },
+        "verifierUrl": {
+          "description": "Where the attested outcome of a job can be fetched and checked: GET <verifierUrl>/<job.id> returns its decision record.",
+          "type": "string",
+          "pattern": "^https://[!\"$->@-~]*[!\"$-.0->@-~]$",
+          "maxLength": 2048
+        }
+      },
+      "required": ["schema"],
+      "additionalProperties": false
+    },
+    "settlement": {
+      "type": "object",
+      "properties": {
+        "reviewWindowSeconds": {
+          "description": "Length of the review window, in seconds from submission.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "settlementMode": {
+          "description": "What silence after the review window does.",
+          "type": "string",
+          "enum": ["release", "refund"]
+        },
+        "feePayer": {
+          "description": "Which party bears the escrow operator's fee.",
+          "type": "string",
+          "enum": ["client", "worker"]
+        }
+      },
+      "required": ["reviewWindowSeconds", "settlementMode", "feePayer"],
+      "additionalProperties": false
+    },
+    "nextActions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nextAction" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "acceptance": {
+      "description": "The predicate the judge will apply to the delivery.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The predicate's name: lowercase words joined by hyphens, never a colon.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+          "maxLength": 64
+        },
+        "paramsHash": {
+          "description": "SHA-256 of the canonical JSON (RFC 8785) of the predicate's parameters.",
+          "$ref": "#/$defs/sha256Hex"
+        },
+        "fixtureHashes": {
+          "description": "SHA-256 of each fixture the predicate was tested against.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/sha256Hex" },
+          "uniqueItems": true
+        }
+      },
+      "required": ["name", "paramsHash"],
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "string",
+      "enum": ["fund", "claim", "submit", "poll", "release", "dispute", "cancel", "refund"]
+    },
+    "actor": {
+      "type": "string",
+      "enum": ["buyer", "worker", "judge", "timekeeper", "arbitrator", "anyone"]
+    },
+    "notBefore": {
+      "description": "Unix seconds before which the step is not yet legal.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "args": {
+      "description": "Arguments the step takes that the reader cannot derive itself.",
+      "type": "object"
+    },
+    "nextAction": {
+      "oneOf": [
+        { "$ref": "#/$defs/onchainAction" },
+        { "$ref": "#/$defs/serverAction" },
+        { "$ref": "#/$defs/mcpAction" }
+      ]
+    },
+    "onchainAction": {
+      "type": "object",
+      "properties": {
+        "action": { "$ref": "#/$defs/action" },
+        "actor": { "$ref": "#/$defs/actor" },
+        "channel": { "const": "onchain" },
+        "notBefore": { "$ref": "#/$defs/notBefore" },
+        "network": {
+          "description": "CAIP-2 network id.",
+          "type": "string",
+          "pattern": "^[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}$"
+        },
+        "instruction": {
+          "description": "The program instruction or contract function to send.",
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,63}$"
+        },
+        "address": {
+          "description": "The job's on-chain address, once it exists.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9]{1,128}$"
+        },
+        "args": { "$ref": "#/$defs/args" }
+      },
+      "required": ["action", "actor", "channel", "network", "instruction"],
+      "additionalProperties": false
+    },
+    "serverAction": {
+      "type": "object",
+      "properties": {
+        "action": { "$ref": "#/$defs/action" },
+        "actor": { "$ref": "#/$defs/actor" },
+        "channel": { "const": "server" },
+        "notBefore": { "$ref": "#/$defs/notBefore" },
+        "method": { "type": "string", "enum": ["GET", "POST"] },
+        "url": { "type": "string", "pattern": "^https://[!-~]+$", "maxLength": 2048 }
+      },
+      "required": ["action", "actor", "channel", "method", "url"],
+      "additionalProperties": false
+    },
+    "mcpAction": {
+      "type": "object",
+      "properties": {
+        "action": { "$ref": "#/$defs/action" },
+        "actor": { "$ref": "#/$defs/actor" },
+        "channel": { "const": "mcp" },
+        "notBefore": { "$ref": "#/$defs/notBefore" },
+        "server": {
+          "description": "The MCP server that offers the tool: a package name or an https URL.",
+          "type": "string",
+          "pattern": "^[!-~]{1,256}$"
+        },
+        "tool": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$" },
+        "args": { "$ref": "#/$defs/args" }
+      },
+      "required": ["action", "actor", "channel", "server", "tool"],
+      "additionalProperties": false
+    },
+    "decisionRecord": {
+      "description": "The judge's decision, as its memo and an ERC-8183 reason hash it.",
+      "type": "object",
+      "properties": {
+        "acceptance": { "$ref": "#/$defs/acceptance" },
+        "decision": { "type": "string", "enum": ["pass", "fail"] },
+        "deliverableHash": {
+          "description": "Lowercase hex SHA-256 of the delivered bytes, with no 0x prefix, as the binding commits it.",
+          "$ref": "#/$defs/sha256Hex"
+        },
+        "job": { "$ref": "#/$defs/job" }
+      },
+      "required": ["acceptance", "decision", "deliverableHash", "job"],
+      "additionalProperties": false
+    },
+    "job": {
+      "description": "The job the record decides, in its network's one written form. On Solana, program and id each decode from base58 to exactly 32 bytes and are written as that key encodes, and re-encode to the same text.",
+      "oneOf": [
+        {
+          "description": "Solana: the CAIP-2 network, the program id and the escrow account's address.",
+          "type": "object",
+          "properties": {
+            "network": { "type": "string", "pattern": "^solana:[1-9A-HJ-NP-Za-km-z]{32}$" },
+            "program": { "type": "string", "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$" },
+            "id": { "type": "string", "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$" }
+          },
+          "required": ["network", "program", "id"],
+          "additionalProperties": false
+        },
+        {
+          "description": "ERC-8183: the CAIP-2 network, the lowercase contract address and the jobId in decimal.",
+          "type": "object",
+          "properties": {
+            "network": { "type": "string", "pattern": "^eip155:[1-9][0-9]{0,31}$" },
+            "program": { "type": "string", "pattern": "^0x[0-9a-f]{40}$" },
+            "id": { "type": "string", "pattern": "^(0|[1-9][0-9]{0,77})$" }
+          },
+          "required": ["network", "program", "id"],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

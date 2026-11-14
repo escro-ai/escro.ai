@@ -1,0 +1,22 @@
+{
+  "name": "@escro/verify",
+  "version": "0.1.0",
+  "description": "escro-verify: read what the Escro program recorded for one escrow from any Solana RPC",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.95.8"
+  },
+  "devDependencies": {
+    "@escro/sdk": "workspace:*",
+    "@escro/shared": "workspace:*",
+    "vitest": "^4.0.0"
+  }
+}

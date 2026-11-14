@@ -1,0 +1,66 @@
+{
+  "name": "@escro/plugin-sak",
+  "version": "0.1.0",
+  "description": "Solana Agent Kit plugin exposing Escro conditional-release USDC escrow and x402 payment as agent actions",
+  "license": "MIT",
+  "homepage": "https://escro.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/escro-ai/escro.ai",
+    "directory": "packages/plugin-sak"
+  },
+  "keywords": [
+    "solana-agent-kit",
+    "plugin",
+    "escro",
+    "escrow",
+    "x402",
+    "solana",
+    "usdc",
+    "ai-agents"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "peerDependencies": {
+    "@escro/sdk": "workspace:^",
+    "@solana/web3.js": "^1.95.0",
+    "zod": "^3.25.40"
+  },
+  "devDependencies": {
+    "@escro/sdk": "workspace:*",
+    "@escro/shared": "workspace:*",
+    "@solana/web3.js": "^1.95.8",
+    "tsup": "^9.0.0",
+    "vitest": "^4.0.0",
+    "zod": "^3.25.40"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "name": "@escro/shared",
+  "version": "0.1.0",
+  "description": "Types, cluster config, account PDAs and chain codecs shared by the Escro packages",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./solana": {
+      "import": {
+        "types": "./dist/solana.d.ts",
+        "default": "./dist/solana.js"
+      },
+      "require": {
+        "types": "./dist/solana.d.cts",
+        "default": "./dist/solana.cjs"
+      }
+    },
+    "./chain": {
+      "import": {
+        "types": "./dist/chain.d.ts",
+        "default": "./dist/chain.js"
+      },
+      "require": {
+        "types": "./dist/chain.d.cts",
+        "default": "./dist/chain.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && tsup",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "bs58": "^5.0.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.95.8"
+  },
+  "devDependencies": {
+    "@solana/web3.js": "^1.95.8",
+    "tsup": "^9.0.0",
+    "vitest": "^4.0.0"
+  }
+}

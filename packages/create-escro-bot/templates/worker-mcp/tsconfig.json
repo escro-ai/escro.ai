@@ -1,0 +1,9 @@
+{
+  "extends": "../worker/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "..",
+    "rootDirs": ["../worker", "."]
+  },
+  "include": ["src/**/*.ts"]
+}

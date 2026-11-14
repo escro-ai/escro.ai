@@ -1,0 +1,9 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "references": [{ "path": "../../shared" }, { "path": "../../sdk" }],
+  "include": ["examples.test.ts", "*/confirm.ts"]
+}

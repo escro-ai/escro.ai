@@ -1,0 +1,91 @@
+{
+  "name": "@escro/x402-middleware",
+  "version": "0.1.0",
+  "description": "Serve an x402 402 menu from your HTTP server: the on-delivery escrow entry beside your exact prices, for an Escro worker",
+  "license": "MIT",
+  "homepage": "https://escro.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/escro-ai/escro.ai",
+    "directory": "packages/x402-middleware"
+  },
+  "keywords": [
+    "x402",
+    "escro",
+    "escrow",
+    "solana",
+    "usdc",
+    "middleware",
+    "ai-agents"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./express": {
+      "import": {
+        "types": "./dist/express.d.ts",
+        "default": "./dist/express.js"
+      },
+      "require": {
+        "types": "./dist/express.d.cts",
+        "default": "./dist/express.cjs"
+      }
+    },
+    "./fastify": {
+      "import": {
+        "types": "./dist/fastify.d.ts",
+        "default": "./dist/fastify.js"
+      },
+      "require": {
+        "types": "./dist/fastify.d.cts",
+        "default": "./dist/fastify.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "peerDependencies": {
+    "@escro/sdk": "workspace:^",
+    "fastify": "^4 || ^5"
+  },
+  "peerDependenciesMeta": {
+    "fastify": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@escro/sdk": "workspace:*",
+    "@escro/shared": "workspace:*",
+    "express": "5.2.1",
+    "fastify": "^4.29.1",
+    "tsup": "^9.0.0",
+    "vitest": "^4.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "paths": {
+      "@solana/web3.js": ["../sdk/node_modules/@solana/web3.js/lib/index.d.ts"]
+    }
+  },
+  "include": ["src", "examples"]
+}

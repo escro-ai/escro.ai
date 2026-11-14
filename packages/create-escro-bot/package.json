@@ -1,0 +1,56 @@
+{
+  "name": "create-escro-bot",
+  "version": "0.2.0",
+  "description": "Scaffold an Escro bot in one command: npx create-escro-bot",
+  "license": "MIT",
+  "homepage": "https://escro.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/escro-ai/escro.ai",
+    "directory": "packages/create-escro-bot"
+  },
+  "keywords": [
+    "solana",
+    "escrow",
+    "ai-agents",
+    "bot",
+    "scaffold",
+    "create"
+  ],
+  "type": "module",
+  "bin": {
+    "create-escro-bot": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.templates.json",
+    "clean": "rm -rf dist *.tsbuildinfo .tmp-test"
+  },
+  "dependencies": {
+    "@clack/prompts": "1.7.0",
+    "bs58": "^5.0.0",
+    "tweetnacl": "^1.0.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@escro/sdk": "workspace:*",
+    "@escro/shared": "workspace:*",
+    "@escro/x402-middleware": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@solana/web3.js": "^1.95.8",
+    "@types/node": "^26.6.5",
+    "tsup": "^9.0.0",
+    "vitest": "^4.0.0"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md"
+  ]
+}

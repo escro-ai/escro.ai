@@ -1,0 +1,58 @@
+{
+  "name": "@escro/sdk",
+  "version": "0.5.0",
+  "description": "TypeScript SDK for the escro.ai on-chain escrow protocol",
+  "license": "MIT",
+  "homepage": "https://escro.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/escro-ai/escro.ai",
+    "directory": "packages/sdk"
+  },
+  "keywords": [
+    "solana",
+    "escrow",
+    "sdk",
+    "ai-agents",
+    "spl-token"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.examples.json",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@solana/kit": "8.6.0",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.95.8",
+    "@x402/core": "2.29.0",
+    "@x402/svm": "2.29.0",
+    "bs58": "^5.0.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.95.0"
+  },
+  "devDependencies": {
+    "@escro/shared": "workspace:*",
+    "tsup": "^9.0.0",
+    "vitest": "^4.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@escro/plugin-eliza",
+  "description": "Escrow for AI agents: commission a worker or fund its 402 with USDC in an Escro conditional-release escrow on Solana, and settle with your own predicate.",
+  "repository": "https://github.com/escro-ai/escro.ai",
+  "directory": "packages/plugin-eliza",
+  "npm": "@escro/plugin-eliza",
+  "tags": ["escrow", "solana", "usdc", "payments", "commission", "async"],
+  "actions": ["COMMISSION_TASK", "PAY_402", "REVIEW_DELIVERY"],
+  "peerDependencies": {
+    "@elizaos/core": ">=1.7.0 <3"
+  }
+}

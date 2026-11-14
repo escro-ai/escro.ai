@@ -1,0 +1,102 @@
+{
+  "name": "@escro/plugin-eliza",
+  "version": "0.2.0",
+  "description": "elizaOS plugin for Escro conditional-release escrow: commission a worker, fund a 402, and settle the delivery with your own predicate",
+  "license": "MIT",
+  "homepage": "https://escro.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/escro-ai/escro.ai",
+    "directory": "packages/plugin-eliza"
+  },
+  "keywords": [
+    "elizaos",
+    "elizaos-plugins",
+    "plugin",
+    "escro",
+    "escrow",
+    "solana",
+    "usdc",
+    "ai-agents"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "agentConfig": {
+    "pluginParameters": {
+      "ESCRO_WALLET_SECRET": {
+        "type": "string",
+        "description": "Base58-encoded ed25519 secret key for the agent's Solana wallet. Provided via env/secrets; never logged.",
+        "required": true,
+        "sensitive": true
+      },
+      "ESCRO_CLUSTER": {
+        "type": "string",
+        "description": "Solana cluster the agent transacts on: 'devnet' or 'mainnet'.",
+        "required": false,
+        "default": "devnet"
+      },
+      "ESCRO_RPC_URL": {
+        "type": "string",
+        "description": "Solana RPC endpoint URL. Defaults to the public endpoint for the cluster.",
+        "required": false
+      },
+      "ESCRO_API_URL": {
+        "type": "string",
+        "description": "Escro REST API base URL. Defaults to the public API for the cluster.",
+        "required": false
+      },
+      "ESCRO_SPEND_CAP_USDC": {
+        "type": "string",
+        "description": "The most USDC the agent's wallet may hold in open escrows, each counted as amount plus fee (e.g. '50'). Required on mainnet to commission; never taken from a commission.",
+        "required": false
+      },
+      "ESCRO_CHAT_INPUT_CONSENT": {
+        "type": "string",
+        "description": "Lets a fenced JSON block in a chat message spend the wallet, for every sender, when set to the exact sentence in the README. Unset by default: chat text spends nothing. Ignored when the operator registers authorizeChatInput.",
+        "required": false,
+        "sensitive": false
+      },
+      "ESCRO_PAY_402_ALLOW_PRIVATE_HOSTS": {
+        "type": "string",
+        "description": "Set to exactly '1' to let PAY_402 pay a URL whose host is a loopback, link-local or private address (a local worker). Unset by default: such hosts are refused. Any other value fails the action. On mainnet PAY_402 still pays a public host only over https:.",
+        "required": false,
+        "sensitive": false
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p examples/tsconfig.json",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@escro/sdk": "workspace:^",
+    "@solana/web3.js": "^1.95.8",
+    "bs58": "^5.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@escro/shared": "workspace:*",
+    "tsup": "^9.0.0",
+    "vitest": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "characters",
+    "README.md"
+  ]
+}

@@ -1,0 +1,37 @@
+packages:
+  - "packages/sdk"
+  - "packages/shared"
+  - "packages/mcp"
+  - "packages/create-escro-bot"
+  - "packages/plugin-eliza"
+  - "packages/plugin-sak"
+  - "packages/x402-middleware"
+  - "tools/verify"
+
+# pnpm 12.15.0 reads settings only from this file (not .npmrc or the package.json "pnpm" field).
+
+overrides:
+  "ajv>fast-uri": "^3.1.2"
+  "serialize-javascript": ">=7.0.5"
+  # The MCP SDK accepts ^1.19.9 || ^2.0.5; this keeps its line at 1.x with the 1.x fixes.
+  "@modelcontextprotocol/sdk>@hono/node-server": "^1.19.17"
+
+audit:
+  ignore: [GHSA-3gc7-fjrx-p6mg]
+
+# A release must be a week old before any install takes it (minutes): most compromised versions
+# are pulled from the registry well inside that window. pnpm 12.15.0 checks every lockfile entry
+# against it, frozen installs included; strict fails resolution rather than falling back to a
+# younger version. Exempt: Escro's own published packages (the soak pins each new SDK release),
+# and exact pins only where a security fix cannot wait, each removed once it is a week old.
+minimumReleaseAge: 10080
+minimumReleaseAgeStrict: true
+minimumReleaseAgeExclude:
+  - "@escro/*"
+
+# Dependencies whose install scripts ran under pnpm 9 (pnpm 12.15.0 blocks unlisted ones).
+allowBuilds:
+  bigint-buffer: true
+  bufferutil: true
+  esbuild: true
+  utf-8-validate: true

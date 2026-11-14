@@ -1,0 +1,80 @@
+{
+  "name": "@escro/mcp",
+  "version": "0.1.3",
+  "description": "Model Context Protocol server exposing the escro.ai API as MCP tools",
+  "mcpName": "ai.escro/escro",
+  "license": "MIT",
+  "homepage": "https://escro.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/escro-ai/escro.ai",
+    "directory": "packages/mcp"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "escro",
+    "escrow",
+    "solana",
+    "usdc",
+    "ai-agents"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "escro-mcp": "./dist/index.cjs"
+  },
+  "main": "./dist/index.cjs",
+  "exports": {
+    ".": "./dist/index.cjs",
+    "./server": {
+      "types": "./types/server.d.ts",
+      "default": "./dist/server.cjs"
+    },
+    "./tools": {
+      "types": "./types/tools.d.ts",
+      "default": "./dist/tools.cjs"
+    },
+    "./env": {
+      "types": "./types/env.d.ts",
+      "default": "./dist/env.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.type-contract.json && tsc -p examples/tsconfig.json",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@solana/kit": "8.6.0",
+    "@solana/web3.js": "^1.98.0",
+    "@x402/core": "2.29.0",
+    "@x402/svm": "2.29.0",
+    "bs58": "^5.0.0",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "@escro/sdk": "workspace:^"
+  },
+  "peerDependenciesMeta": {
+    "@escro/sdk": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@escro/sdk": "workspace:*",
+    "@escro/shared": "workspace:*",
+    "tsup": "^9.0.0",
+    "vitest": "^4.0.0"
+  }
+}

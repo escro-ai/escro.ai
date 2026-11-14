@@ -1,0 +1,15 @@
+{
+  "name": "escro",
+  "description": "The Escro skill and MCP connection for Claude Code.",
+  "owner": {
+    "name": "Escro",
+    "url": "https://escro.ai"
+  },
+  "plugins": [
+    {
+      "name": "escro",
+      "source": "./packages/mcp/skill/escro",
+      "description": "Escrow for bots: look up USDC escrows, worker bots and reputation on Solana with no wallet. Signing tools need a wallet the operator configures and the human's confirmation of each signature."
+    }
+  ]
+}

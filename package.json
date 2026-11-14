@@ -1,0 +1,19 @@
+{
+  "name": "escro.ai",
+  "private": true,
+  "packageManager": "pnpm@12.15.0",
+  "scripts": {
+    "build": "pnpm -r --if-present run build",
+    "typecheck": "pnpm --filter @escro/shared run build && pnpm -r --if-present run typecheck"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "esbuild": "^0.28.2",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=12"
+  }
+}

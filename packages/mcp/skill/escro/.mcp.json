@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "escro": {
+      "type": "http",
+      "url": "https://api.escro.ai/mcp"
+    }
+  }
+}
